@@ -21,12 +21,12 @@ object job {
     //Mapper - Data Types
     val mapper = spark.read.
       option("multiline", true).
-      json("/home/vitorsampaio/Documentos/WorkSpace/Cognitivo/config/")
+      json("/home/vitorsampaio/IdeaProjects/cognitivoProject/config/")
 
     //Raw Data
     val load_raw = spark.read.
         option("header", true).
-        csv("/home/vitorsampaio/Documentos/WorkSpace/Cognitivo/data/input/users/")
+        csv("/home/vitorsampaio/IdeaProjects/cognitivoProject/data/input/users/")
 
     //Rank
     val load_rank = load_raw.withColumn("rank", row_number.over(Window.partitionBy("id").orderBy(desc("update_date")))).
@@ -49,7 +49,7 @@ object job {
       coalesce(1).
       write.
       mode("overwrite").
-      parquet("/home/vitorsampaio/Documentos/WorkSpace/Cognitivo/data/output/load.parquet")
+      parquet("/home/vitorsampaio/IdeaProjects/cognitivoProject/data/output/persist")
 
   }
 }
